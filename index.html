@@ -1,169 +1,452 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>HVAC Tools - Free AC & HVAC Calculators</title>
+  <title>HVAC Tools | Free AC & HVAC Calculators</title>
+  <meta name="description" content="Free HVAC tools and AC calculators for BTU, tonnage, electricity cost and refrigeration calculations.">
+  <meta name="keywords" content="HVAC tools, AC calculator, BTU calculator, ton calculator, refrigeration calculator">
+  <meta name="author" content="HVAC Tools">
 
-<meta name="description" content="Free HVAC calculators for AC BTU, electricity cost, tonnage and cooling capacity. Simple tools for homeowners and HVAC technicians.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="style.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(0, 229, 255, .16), transparent 28%),
+        radial-gradient(circle at 90% 20%, rgba(123, 97, 255, .18), transparent 30%),
+        linear-gradient(135deg, #07111f, #0b1729 50%, #07101c);
+      color: #eef7ff;
+      min-height: 100vh;
+    }
+
+    /* NAVBAR */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      background: rgba(5, 14, 27, .82);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .nav-container {
+      max-width: 1150px;
+      margin: auto;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: "Orbitron", sans-serif;
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: #ffffff;
+    }
+
+    .logo span {
+      color: #00e5ff;
+    }
+
+    nav a {
+      color: #d9e8f5;
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: .3s;
+    }
+
+    nav a:hover {
+      color: #00e5ff;
+    }
+
+    /* HERO */
+    .hero {
+      max-width: 1150px;
+      margin: auto;
+      padding: 80px 20px 60px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 50px;
+      background: rgba(0,229,255,.1);
+      border: 1px solid rgba(0,229,255,.3);
+      color: #5ceeff;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      font-family: "Orbitron", sans-serif;
+      font-size: clamp(32px, 6vw, 62px);
+      line-height: 1.15;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(90deg, #00e5ff, #7c6cff, #ff5fd2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      max-width: 680px;
+      margin: auto;
+      color: #aebfd0;
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .hero-buttons {
+      margin-top: 30px;
+    }
+
+    .primary-btn {
+      display: inline-block;
+      padding: 14px 25px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #00c8e8, #5b5cff);
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      box-shadow: 0 10px 35px rgba(0,190,255,.2);
+      transition: .3s;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(0,190,255,.35);
+    }
+
+    /* SECTION */
+    .section {
+      max-width: 1150px;
+      margin: auto;
+      padding: 25px 20px 70px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .section-title h2 {
+      font-family: "Orbitron", sans-serif;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .section-title p {
+      color: #91a7ba;
+    }
+
+    /* CARDS */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 22px;
+    }
+
+    .tool-card {
+      position: relative;
+      overflow: hidden;
+      padding: 27px;
+      border-radius: 20px;
+      background: linear-gradient(
+        145deg,
+        rgba(255,255,255,.08),
+        rgba(255,255,255,.025)
+      );
+      border: 1px solid rgba(255,255,255,.09);
+      backdrop-filter: blur(12px);
+      transition: .35s;
+    }
+
+    .tool-card::before {
+      content: "";
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      background: #00e5ff;
+      filter: blur(70px);
+      opacity: .08;
+      top: -40px;
+      right: -40px;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(0,229,255,.4);
+      box-shadow: 0 15px 40px rgba(0,0,0,.25);
+    }
+
+    .icon {
+      width: 58px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      font-size: 28px;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, rgba(0,229,255,.2), rgba(91,92,255,.2));
+    }
+
+    .tool-card h3 {
+      font-family: "Orbitron", sans-serif;
+      font-size: 17px;
+      margin-bottom: 10px;
+    }
+
+    .tool-card p {
+      color: #9eb1c3;
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 45px;
+    }
+
+    .card-btn {
+      display: inline-block;
+      margin-top: 20px;
+      color: #55eaff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .coming {
+      opacity: .72;
+    }
+
+    .coming .card-btn {
+      color: #aeb7c2;
+    }
+
+    /* INFO */
+    .info-box {
+      margin-top: 25px;
+      padding: 28px;
+      border-radius: 20px;
+      background: linear-gradient(
+        135deg,
+        rgba(0,229,255,.08),
+        rgba(124,108,255,.08)
+      );
+      border: 1px solid rgba(255,255,255,.08);
+      text-align: center;
+    }
+
+    .info-box h2 {
+      font-family: "Orbitron", sans-serif;
+      margin-bottom: 12px;
+    }
+
+    .info-box p {
+      color: #aebfd0;
+      line-height: 1.7;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding: 30px 20px;
+      text-align: center;
+      color: #8195a8;
+      font-size: 13px;
+    }
+
+    footer a {
+      color: #9db4c8;
+      text-decoration: none;
+      margin: 0 7px;
+    }
+
+    footer a:hover {
+      color: #00e5ff;
+    }
+
+    /* MOBILE */
+    @media (max-width: 650px) {
+      .nav-container {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      nav a {
+        margin: 0 6px;
+        font-size: 12px;
+      }
+
+      .hero {
+        padding-top: 55px;
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .tools-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tool-card {
+        padding: 23px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
-  <div class="wrap nav">
-    <a class="logo" href="index.html">❄ HVAC Tools</a>
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="nav-container">
+      <div class="logo">HVAC<span>TOOLS</span></div>
 
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="ac-btu-calculator.html">AC BTU Calculator</a>
-      <a href="electricity-cost.html">Electricity Cost</a>
-      <a href="about.html">About</a>
+      <div>
+        <a href="index.html">Home</a>
+        <a href="#tools">Tools</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-badge">❄ FREE HVAC CALCULATORS</div>
+
+    <h1>
+      Smart Tools for<br>
+      <span>HVAC Professionals</span>
+    </h1>
+
+    <p>
+      Simple, fast and practical calculators for air conditioning,
+      refrigeration and electrical HVAC work.
+    </p>
+
+    <div class="hero-buttons">
+      <a href="#tools" class="primary-btn">Explore HVAC Tools →</a>
+    </div>
+  </header>
+
+  <!-- TOOLS -->
+  <section class="section" id="tools">
+
+    <div class="section-title">
+      <h2>HVAC Tools</h2>
+      <p>Useful tools for technicians, engineers and AC users</p>
+    </div>
+
+    <div class="tools-grid">
+
+      <!-- AC BTU -->
+      <div class="tool-card">
+        <div class="icon">❄️</div>
+        <h3>AC BTU & Ton Calculator</h3>
+        <p>
+          Calculate the required AC BTU and tonnage according to room size.
+        </p>
+        <a href="ac-btu-calculator.html" class="card-btn">
+          Open Calculator →
+        </a>
+      </div>
+
+      <!-- ELECTRICITY -->
+      <div class="tool-card coming">
+        <div class="icon">⚡</div>
+        <h3>Electricity Cost Calculator</h3>
+        <p>
+          Estimate electricity consumption and AC running cost.
+        </p>
+        <span class="card-btn">Coming Soon</span>
+      </div>
+
+      <!-- REFRIGERANT -->
+      <div class="tool-card coming">
+        <div class="icon">🧊</div>
+        <h3>Refrigerant Pressure Tool</h3>
+        <p>
+          Quickly reference common refrigerant pressure and temperature data.
+        </p>
+        <span class="card-btn">Coming Soon</span>
+      </div>
+
+      <!-- SUPERHEAT -->
+      <div class="tool-card coming">
+        <div class="icon">🌡️</div>
+        <h3>Superheat Calculator</h3>
+        <p>
+          Calculate evaporator superheat for refrigeration troubleshooting.
+        </p>
+        <span class="card-btn">Coming Soon</span>
+      </div>
+
+      <!-- SUBCOOLING -->
+      <div class="tool-card coming">
+        <div class="icon">💧</div>
+        <h3>Subcooling Calculator</h3>
+        <p>
+          Calculate condenser subcooling from pressure and temperature.
+        </p>
+        <span class="card-btn">Coming Soon</span>
+      </div>
+
+      <!-- WATER CHILLER -->
+      <div class="tool-card coming">
+        <div class="icon">🚰</div>
+        <h3>Water Chiller Calculator</h3>
+        <p>
+          Estimate cooling requirements for water tanks and chillers.
+        </p>
+        <span class="card-btn">Coming Soon</span>
+      </div>
+
+    </div>
+
+    <div class="info-box">
+      <h2>Built for HVAC Work 🔧</h2>
+      <p>
+        HVAC Tools is designed to provide simple online calculators
+        and reference tools that make everyday air-conditioning and
+        refrigeration work easier.
+      </p>
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 HVAC Tools. All Rights Reserved.</p>
+
+    <p style="margin-top:12px;">
+      <a href="Privacy.html">Privacy Policy</a>
+      <a href="Disclaimer.html">Disclaimer</a>
+      <a href="Terms.html">Terms</a>
       <a href="contact.html">Contact</a>
-    </nav>
-  </div>
-</header>
-
-<main>
-
-<section class="hero">
-  <div class="wrap">
-    <span class="tag">FREE HVAC CALCULATORS</span>
-
-    <h1>Practical tools for AC & HVAC calculations</h1>
-
-    <p>
-      Estimate air-conditioning capacity and explore simple HVAC
-      calculation tools from your phone.
     </p>
-
-    <a class="btn" href="ac-btu-calculator.html">
-      Open AC BTU Calculator →
-    </a>
-  </div>
-</section>
-
-
-<section class="wrap section">
-
-  <h2>Our Tools</h2>
-
-  <div class="cards">
-
-    <!-- AC BTU Calculator -->
-    <article>
-      <div class="icon">🧊</div>
-
-      <h3>AC BTU & Ton Calculator</h3>
-
-      <p>
-        Estimate cooling capacity using room dimensions, ceiling height,
-        occupants, windows, sunlight, roof and insulation.
-      </p>
-
-      <a href="ac-btu-calculator.html">
-        Calculate now →
-      </a>
-    </article>
-
-
-    <!-- Electricity Cost Calculator -->
-    <article>
-      <div class="icon">⚡</div>
-
-      <h3>AC Electricity Cost Calculator</h3>
-
-      <p>
-        Estimate AC running cost from power consumption,
-        daily usage hours, electricity rate and number of days.
-      </p>
-
-      <a href="electricity-cost.html">
-        Calculate electricity cost →
-      </a>
-    </article>
-
-
-    <!-- More HVAC Tools -->
-    <article class="soon">
-      <div class="icon">🔧</div>
-
-      <h3>More HVAC Calculators</h3>
-
-      <p>
-        More practical tools for HVAC technicians,
-        engineers and homeowners.
-      </p>
-
-      <span>Coming soon</span>
-    </article>
-
-  </div>
-
-</section>
-
-
-<section class="wrap section">
-
-  <div class="info">
-
-    <h2>Why use HVAC Tools?</h2>
-
-    <p>
-      Our calculators are designed to provide quick estimates and explain
-      the assumptions behind the result. They are useful for planning,
-      comparison and learning, but they do not replace a professional
-      heat-load calculation.
-    </p>
-
-  </div>
-
-</section>
-
-</main>
-
-
-<footer style="
-  margin-top: 50px;
-  padding: 25px 15px;
-  text-align: center;
-  background: #f5f7fb;
-  border-top: 1px solid #e5e7eb;
-  font-family: Inter, Arial, sans-serif;
-">
-
-  <div style="margin-bottom: 12px;">
-
-    <a href="Privacy.html"
-       style="margin: 0 10px; color: #0b5ed7; text-decoration: none;">
-      Privacy Policy
-    </a>
-
-    <a href="Disclaimer.html"
-       style="margin: 0 10px; color: #0b5ed7; text-decoration: none;">
-      Disclaimer
-    </a>
-
-    <a href="Terms.html"
-       style="margin: 0 10px; color: #0b5ed7; text-decoration: none;">
-      Terms & Conditions
-    </a>
-
-    <a href="contact.html"
-       style="margin: 0 10px; color: #0b5ed7; text-decoration: none;">
-      Contact
-    </a>
-
-  </div>
-
-  <p style="margin: 0; color: #6b7280; font-size: 13px;">
-    © 2026 HVAC Tools. All rights reserved.
-  </p>
-
-</footer>
+  </footer>
 
 </body>
 </html>
