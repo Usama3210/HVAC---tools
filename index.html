@@ -1,997 +1,1169 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>HVAC Tools | Free AC & HVAC Calculators</title>
-
-  <meta name="description" content="Free HVAC tools and calculators for AC technicians, refrigeration technicians and HVAC professionals. Calculate BTU, AC tonnage and more.">
-  <meta name="keywords" content="HVAC tools, AC calculator, BTU calculator, AC ton calculator, refrigeration tools, HVAC calculator">
-  <meta name="author" content="HVAC Tools">
-
-  <meta name="theme-color" content="#071426">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: "Inter", Arial, sans-serif;
-      background: #071426;
-      color: #eaf4ff;
-      line-height: 1.6;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button,
-    input {
-      font: inherit;
-    }
-
-    .container {
-      width: min(1180px, 92%);
-      margin: auto;
-    }
-
-    /* =========================
-       NAVBAR
-    ========================== */
-
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: rgba(5, 17, 32, 0.95);
-      border-bottom: 1px solid rgba(91, 183, 255, 0.15);
-      backdrop-filter: blur(12px);
-    }
-
-    .nav-inner {
-      min-height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .logo {
-      font-family: "Orbitron", sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-      color: #69c7ff;
-      letter-spacing: 0.5px;
-      white-space: nowrap;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-    }
-
-    .nav-links a {
-      color: #b8cbe0;
-      font-size: 14px;
-      font-weight: 600;
-      transition: 0.2s ease;
-    }
-
-    .nav-links a:hover {
-      color: #69c7ff;
-    }
-
-    .search-box {
-      width: 210px;
-    }
-
-    .search-box input {
-      width: 100%;
-      padding: 10px 14px;
-      border: 1px solid #203b57;
-      border-radius: 10px;
-      outline: none;
-      background: #0b1d32;
-      color: #ffffff;
-    }
-
-    .search-box input::placeholder {
-      color: #70869d;
-    }
-
-    .search-box input:focus {
-      border-color: #3aaef5;
-      box-shadow: 0 0 0 3px rgba(58, 174, 245, 0.12);
-    }
-
-    /* =========================
-       HERO
-    ========================== */
-
-    .hero {
-      padding: 85px 0 70px;
-      background:
-        radial-gradient(circle at 80% 20%, rgba(0, 174, 255, 0.12), transparent 32%),
-        radial-gradient(circle at 15% 60%, rgba(0, 111, 255, 0.08), transparent 30%),
-        #071426;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      align-items: center;
-      gap: 55px;
-    }
-
-    .badge {
-      display: inline-block;
-      margin-bottom: 20px;
-      padding: 8px 14px;
-      border: 1px solid rgba(89, 195, 255, 0.3);
-      border-radius: 999px;
-      background: rgba(52, 167, 232, 0.08);
-      color: #6dcaff;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
-
-    .hero h1 {
-      font-family: "Orbitron", sans-serif;
-      font-size: clamp(34px, 5vw, 60px);
-      line-height: 1.12;
-      margin-bottom: 20px;
-      color: #ffffff;
-    }
-
-    .hero h1 span {
-      color: #5ec4ff;
-    }
-
-    .hero p {
-      max-width: 650px;
-      color: #a9bdd2;
-      font-size: 17px;
-      margin-bottom: 30px;
-    }
-
-    .hero-features {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-bottom: 30px;
-    }
-
-    .feature {
-      padding: 10px 14px;
-      border: 1px solid #1b3853;
-      border-radius: 10px;
-      background: rgba(13, 34, 55, 0.7);
-      color: #c9d9e8;
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    .primary-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 13px 21px;
-      border-radius: 11px;
-      background: #2da9ec;
-      color: #041321;
-      font-weight: 800;
-      transition: 0.2s ease;
-      box-shadow: 0 10px 30px rgba(45, 169, 236, 0.18);
-    }
-
-    .primary-btn:hover {
-      transform: translateY(-2px);
-      background: #58c2ff;
-    }
-
-    /* =========================
-       HERO VISUAL
-    ========================== */
-
-    .hero-visual {
-      position: relative;
-      min-height: 380px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .hvac-card {
-      width: min(100%, 500px);
-      min-height: 330px;
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(94, 196, 255, 0.25);
-      border-radius: 24px;
-      background:
-        linear-gradient(145deg, rgba(20, 52, 78, 0.96), rgba(7, 24, 41, 0.98));
-      box-shadow:
-        0 25px 70px rgba(0, 0, 0, 0.35),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    }
-
-    .hvac-card::before {
-      content: "";
-      position: absolute;
-      width: 240px;
-      height: 240px;
-      right: -80px;
-      top: -90px;
-      border-radius: 50%;
-      background: rgba(69, 188, 255, 0.12);
-      filter: blur(10px);
-    }
-
-    .hvac-card::after {
-      content: "";
-      position: absolute;
-      width: 190px;
-      height: 190px;
-      left: -80px;
-      bottom: -100px;
-      border-radius: 50%;
-      background: rgba(30, 115, 255, 0.10);
-      filter: blur(12px);
-    }
-
-    .card-label {
-      position: absolute;
-      top: 22px;
-      left: 24px;
-      z-index: 3;
-      color: #77d0ff;
-      font-family: "Orbitron", sans-serif;
-      font-size: 12px;
-      letter-spacing: 1px;
-    }
-
-    .ac-unit {
-      position: absolute;
-      width: 270px;
-      height: 155px;
-      top: 82px;
-      left: 50%;
-      transform: translateX(-50%);
-      border-radius: 12px;
-      border: 2px solid #52728d;
-      background: linear-gradient(180deg, #dbe8ef, #8ea7b8);
-      box-shadow: 0 18px 35px rgba(0, 0, 0, 0.3);
-    }
-
-    .ac-top {
-      position: absolute;
-      left: 15px;
-      right: 15px;
-      top: 15px;
-      height: 30px;
-      border-radius: 6px;
-      background: #b7cbd7;
-      border: 1px solid #708a9d;
-    }
-
-    .ac-display {
-      position: absolute;
-      right: 18px;
-      top: 20px;
-      width: 44px;
-      height: 18px;
-      border-radius: 4px;
-      background: #143348;
-      color: #70d5ff;
-      font-size: 9px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-    }
-
-    .air-slots {
-      position: absolute;
-      left: 18px;
-      right: 18px;
-      bottom: 20px;
-      height: 48px;
-      display: flex;
-      gap: 5px;
-      align-items: flex-end;
-    }
-
-    .air-slots span {
-      flex: 1;
-      height: 30px;
-      border-radius: 2px;
-      background: #607b8d;
-    }
-
-    .cool-air {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: 36px;
-      width: 300px;
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-    }
-
-    .cool-air span {
-      width: 5px;
-      height: 65px;
-      border-radius: 999px;
-      background: rgba(102, 207, 255, 0.55);
-      transform: rotate(8deg);
-      filter: blur(0.5px);
-    }
-
-    .cool-air span:nth-child(2) {
-      height: 82px;
-      transform: rotate(-3deg);
-    }
-
-    .cool-air span:nth-child(3) {
-      height: 60px;
-      transform: rotate(5deg);
-    }
-
-    .cool-air span:nth-child(4) {
-      height: 74px;
-      transform: rotate(-6deg);
-    }
-
-    .visual-text {
-      position: absolute;
-      bottom: 22px;
-      right: 24px;
-      z-index: 3;
-      font-size: 12px;
-      color: #8fa9bd;
-    }
-
-    /* =========================
-       TOOLS
-    ========================== */
-
-    .tools-section {
-      padding: 75px 0;
-      background: #08182a;
-      border-top: 1px solid rgba(255, 255, 255, 0.03);
-    }
-
-    .section-heading {
-      text-align: center;
-      margin-bottom: 42px;
-    }
-
-    .section-heading h2 {
-      font-family: "Orbitron", sans-serif;
-      font-size: clamp(26px, 4vw, 38px);
-      margin-bottom: 10px;
-      color: #ffffff;
-    }
-
-    .section-heading p {
-      color: #91a8bc;
-      max-width: 650px;
-      margin: auto;
-    }
-
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .tool-card {
-      min-height: 220px;
-      padding: 25px;
-      border: 1px solid #193751;
-      border-radius: 17px;
-      background: linear-gradient(145deg, #0c2238, #091a2d);
-      transition: 0.25s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .tool-card:hover {
-      transform: translateY(-5px);
-      border-color: #2c8fc6;
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
-    }
-
-    .tool-icon {
-      width: 50px;
-      height: 50px;
-      border-radius: 13px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 18px;
-      background: rgba(60, 174, 235, 0.11);
-      border: 1px solid rgba(60, 174, 235, 0.22);
-      font-size: 24px;
-    }
-
-    .tool-card h3 {
-      color: #ffffff;
-      font-size: 18px;
-      margin-bottom: 8px;
-    }
-
-    .tool-card p {
-      color: #8fa8bc;
-      font-size: 13px;
-      margin-bottom: 18px;
-    }
-
-    .tool-link {
-      color: #5bc4ff;
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .coming-soon {
-      display: inline-block;
-      padding: 5px 9px;
-      border-radius: 6px;
-      background: rgba(255, 255, 255, 0.06);
-      color: #8095a8;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.4px;
-    }
-
-    /* =========================
-       ABOUT
-    ========================== */
-
-    .about-section {
-      padding: 75px 0;
-      background: #071426;
-    }
-
-    .about-box {
-      padding: 38px;
-      border: 1px solid #1a3853;
-      border-radius: 20px;
-      background: linear-gradient(145deg, #0c2137, #08192b);
-      text-align: center;
-    }
-
-    .about-box h2 {
-      font-family: "Orbitron", sans-serif;
-      color: #ffffff;
-      margin-bottom: 14px;
-    }
-
-    .about-box p {
-      max-width: 760px;
-      margin: auto;
-      color: #98aec1;
-    }
-
-    /* =========================
-       FOOTER
-    ========================== */
-
-    footer {
-      background: #04101e;
-      border-top: 1px solid rgba(91, 183, 255, 0.12);
-      padding: 45px 0 25px;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 1.5fr 1fr 1fr;
-      gap: 35px;
-      margin-bottom: 35px;
-    }
-
-    .footer-column h3 {
-      font-family: "Orbitron", sans-serif;
-      color: #ffffff;
-      font-size: 15px;
-      margin-bottom: 15px;
-    }
-
-    .footer-column p,
-    .footer-column a {
-      color: #8097aa;
-      font-size: 13px;
-    }
-
-    .footer-column a {
-      display: block;
-      margin-bottom: 8px;
-      transition: 0.2s ease;
-    }
-
-    .footer-column a:hover {
-      color: #5bc4ff;
-    }
-
-    .copyright {
-      padding-top: 22px;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      text-align: center;
-      color: #657b8d;
-      font-size: 12px;
-    }
-
-    /* =========================
-       NO RESULTS
-    ========================== */
-
-    #noResults {
-      display: none;
-      text-align: center;
-      color: #8fa8bc;
-      padding: 25px;
-      grid-column: 1 / -1;
-    }
-
-    /* =========================
-       RESPONSIVE
-    ========================== */
-
-    @media (max-width: 900px) {
-      .nav-inner {
-        flex-wrap: wrap;
-        padding: 12px 0;
-      }
-
-      .nav-links {
-        order: 3;
-        width: 100%;
-        justify-content: center;
-        gap: 18px;
-      }
-
-      .search-box {
-        width: 180px;
-      }
-
-      .hero {
-        padding-top: 60px;
-      }
-
-      .hero-grid {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
-
-      .hero-content {
-        text-align: center;
-      }
-
-      .hero p {
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .hero-features {
-        justify-content: center;
-      }
-
-      .tools-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .footer-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 600px) {
-      .container {
-        width: 90%;
-      }
-
-      .logo {
-        font-size: 17px;
-      }
-
-      .search-box {
-        display: none;
-      }
-
-      .nav-inner {
-        min-height: 64px;
-      }
-
-      .nav-links {
-        gap: 13px;
-      }
-
-      .nav-links a {
-        font-size: 12px;
-      }
-
-      .hero {
-        padding: 50px 0;
-      }
-
-      .hero h1 {
-        font-size: 34px;
-      }
-
-      .hero p {
-        font-size: 15px;
-      }
-
-      .hero-visual {
-        min-height: 300px;
-      }
-
-      .hvac-card {
-        min-height: 280px;
-      }
-
-      .ac-unit {
-        width: 230px;
-        height: 135px;
-        top: 75px;
-      }
-
-      .cool-air {
-        width: 250px;
-      }
-
-      .tools-section,
-      .about-section {
-        padding: 55px 0;
-      }
-
-      .tools-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .tool-card {
-        min-height: auto;
-      }
-
-      .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 25px;
-      }
-
-      .about-box {
-        padding: 28px 20px;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <!-- =========================
-       NAVIGATION
-  ========================== -->
-
-  <nav>
-    <div class="container nav-inner">
-
-      <a href="index.html" class="logo" aria-label="HVAC Tools Home">
-        ❄ HVAC TOOLS
-      </a>
-
-      <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="#tools">Tools</a>
-        <a href="#about">About</a>
-        <a href="contact.html">Contact</a>
-      </div>
-
-      <div class="search-box">
-        <input
-          type="search"
-          id="searchInput"
-          placeholder="Search tools..."
-          aria-label="Search HVAC tools"
-        >
-      </div>
-
-    </div>
-  </nav>
-
-
-  <!-- =========================
-       HERO
-  ========================== -->
-
-  <main>
-
-    <section class="hero">
-      <div class="container hero-grid">
-
-        <div class="hero-content">
-
-          <div class="badge">
-            ❄ FREE HVAC CALCULATORS
-          </div>
-
-          <h1>
-            Smart Tools for
-            <span>HVAC Professionals</span>
-          </h1>
-
-          <p>
-            Simple and useful HVAC calculators designed to help AC,
-            refrigeration and HVAC technicians save time and work smarter.
-          </p>
-
-          <div class="hero-features">
-            <div class="feature">✓ Save Time</div>
-            <div class="feature">✓ Accurate Results</div>
-            <div class="feature">✓ Work Smarter</div>
-          </div>
-
-          <a href="#tools" class="primary-btn">
-            Explore HVAC Tools →
-          </a>
-
-        </div>
-
-
-        <div class="hero-visual">
-
-          <div class="hvac-card">
-
-            <div class="card-label">
-              HVAC WORKSTATION
-            </div>
-
-            <div class="ac-unit">
-
-              <div class="ac-top"></div>
-
-              <div class="ac-display">
-                COOL
-              </div>
-
-              <div class="air-slots">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-
-            </div>
-
-            <div class="cool-air">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-
-            <div class="visual-text">
-              Better Cooling • Bigger Comfort
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
-
-    <!-- =========================
-         HVAC TOOLS
-    ========================== -->
-
-    <section class="tools-section" id="tools">
-
-      <div class="container">
-
-        <div class="section-heading">
-          <h2>HVAC Tools</h2>
-          <p>
-            Free online tools for AC technicians, refrigeration technicians
-            and HVAC professionals.
-          </p>
-        </div>
-
-
-        <div class="tools-grid" id="toolsGrid">
-
-          <!-- TOOL 1 -->
-
-          <div class="tool-card">
-
-            <div class="tool-icon">❄️</div>
-
-            <h3>AC BTU &amp; Ton Calculator</h3>
-
-            <p>
-              Calculate required AC BTU and approximate tonnage
-              according to room size and conditions.
-            </p>
-
-            <a href="ac-btu-calculator.html" class="tool-link">
-              Open Calculator →
-            </a>
-
-          </div>
-
-
-          <!-- TOOL 2 -->
-
-          <div class="tool-card">
-
-            <div class="tool-icon">⚡</div>
-
-            <h3>Electricity Cost Calculator</h3>
-
-            <p>
-              Estimate AC electricity consumption and approximate
-              running cost.
-            </p>
-
-            <span class="coming-soon">
-              COMING SOON
-            </span>
-
-          </div>
-
-
-          <!-- TOOL 3 -->
-
-          <div class="tool-card">
-
-            <div class="tool-icon">🌡️</div>
-
-            <h3>Refrigerant Pressure Tool</h3>
-
-            <p>
-              Check common refrigerant pressure information and
-              compare operating conditions.
-            </p>
-
-            <span class="coming-soon">
-              COMING SOON
-            </span>
-
-          </div>
-
-
-          <!-- TOOL 4 -->
-
-          <div class="tool-card">
-
-            <div class="tool-icon">📈</div>
-
-            <h3>Superheat Calculator</h3>
-
-            <p>
-              Calculate superheat using refrigerant saturation
-              temperature and measured suction temperature.
-            </p>
-
-            <span class="coming-soon">
-              COMING SOON
-            </span>
-
-          </div>
-
-
-          <!-- TOOL 5 -->
-
-          <div class="tool-card">
-
-            <div class="tool-icon">📉</div>
-
-            <h3>Subcooling Calculator</h3>
-
-            <p>
-              Calculate liquid-line subcooling using saturation
-              temperature and measured liquid-line temperature.
-            </p>
-
-            <span class="coming-soon">
-              COMING SOON
-            </span>
-
-          </div>
-
-
-          <!-- TOOL 6 -->
-
-          <div class="tool-card">
-
-            <div class="tool-icon">💧</div>
-
-            <h3>Water Chiller Calculator</h3>
-
-            <p>
-              Estimate cooling requirements for water tanks,
-              chilled water systems and basic chiller applications.
-            </p>
-
-            <span class="coming-soon">
-              COMING SOON
-            </span>
-
-          </div>
-
-
-          <div id="noResults">
-            No HVAC tools found.
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         ABOUT
-    ========================== -->
-
-    <section class="about-section" id="about">
-
-      <div class="container">
-
-        <div class="about-box">
-
-          <h2>Built for HVAC Work</h2>
-
-          <p>
-            HVAC Tools is designed to provide simple, practical and
-            easy-to-use calculators for HVAC technicians, AC mechanics,
-            refrigeration professionals and students. Our goal is to make
-            everyday HVAC calculations faster and easier.
-          </p>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <!-- =========================
-       FOOTER
-  ========================== -->
-
-  <footer>
-
-    <div class="container">
-
-      <div class="footer-grid">
-
-        <div class="footer-column">
-
-          <h3>HVAC TOOLS</h3>
-
-          <p>
-           
+‎<!DOCTYPE html>
+‎<html lang="en">
+‎<head>
+‎<meta charset="UTF-8">
+‎<meta name="viewport" content="width=device-width, initial-scale=1.0">
+‎
+‎<title>HVAC Tools | Free AC & HVAC Calculators</title>
+‎
+‎<meta name="description" content="Free HVAC tools and calculators for AC technicians, refrigeration technicians and HVAC professionals. Calculate BTU, AC tonnage and more.">
+‎<meta name="keywords" content="HVAC tools, AC calculator, BTU calculator, AC ton calculator, refrigeration tools, HVAC calculator">
+‎<meta name="author" content="HVAC Tools">
+‎
+‎<meta name="theme-color" content="#071426">
+‎
+‎<link rel="preconnect" href="https://fonts.googleapis.com">
+‎<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+‎<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
+‎
+‎<style>
+‎
+‎* {
+‎  box-sizing: border-box;
+‎  margin: 0;
+‎  padding: 0;
+‎}
+‎
+‎html {
+‎  scroll-behavior: smooth;
+‎}
+‎
+‎body {
+‎  font-family: "Inter", Arial, sans-serif;
+‎  background: #071426;
+‎  color: #eaf4ff;
+‎  line-height: 1.6;
+‎}
+‎
+‎a {
+‎  color: inherit;
+‎  text-decoration: none;
+‎}
+‎
+‎button,
+‎input {
+‎  font: inherit;
+‎}
+‎
+‎.container {
+‎  width: min(1180px, 92%);
+‎  margin: auto;
+‎}
+‎
+‎
+‎/* NAVBAR */
+‎
+‎nav {
+‎  position: sticky;
+‎  top: 0;
+‎  z-index: 1000;
+‎  background: rgba(5, 17, 32, 0.95);
+‎  border-bottom: 1px solid rgba(91, 183, 255, 0.15);
+‎  backdrop-filter: blur(12px);
+‎}
+‎
+‎.nav-inner {
+‎  min-height: 72px;
+‎  display: flex;
+‎  align-items: center;
+‎  justify-content: space-between;
+‎  gap: 20px;
+‎}
+‎
+‎.logo {
+‎  font-family: "Orbitron", sans-serif;
+‎  font-size: 20px;
+‎  font-weight: 700;
+‎  color: #69c7ff;
+‎  letter-spacing: 0.5px;
+‎  white-space: nowrap;
+‎}
+‎
+‎.nav-links {
+‎  display: flex;
+‎  align-items: center;
+‎  gap: 24px;
+‎}
+‎
+‎.nav-links a {
+‎  color: #b8cbe0;
+‎  font-size: 14px;
+‎  font-weight: 600;
+‎  transition: 0.2s ease;
+‎}
+‎
+‎.nav-links a:hover {
+‎  color: #69c7ff;
+‎}
+‎
+‎.search-box {
+‎  width: 210px;
+‎}
+‎
+‎.search-box input {
+‎  width: 100%;
+‎  padding: 10px 14px;
+‎  border: 1px solid #203b57;
+‎  border-radius: 10px;
+‎  outline: none;
+‎  background: #0b1d32;
+‎  color: #ffffff;
+‎}
+‎
+‎.search-box input::placeholder {
+‎  color: #70869d;
+‎}
+‎
+‎.search-box input:focus {
+‎  border-color: #3aaef5;
+‎  box-shadow: 0 0 0 3px rgba(58, 174, 245, 0.12);
+‎}
+‎
+‎
+‎/* HERO */
+‎
+‎.hero {
+‎  padding: 85px 0 70px;
+‎  background:
+‎    radial-gradient(circle at 80% 20%, rgba(0, 174, 255, 0.12), transparent 32%),
+‎    radial-gradient(circle at 15% 60%, rgba(0, 111, 255, 0.08), transparent 30%),
+‎    #071426;
+‎}
+‎
+‎.hero-grid {
+‎  display: grid;
+‎  grid-template-columns: 1.05fr 0.95fr;
+‎  align-items: center;
+‎  gap: 55px;
+‎}
+‎
+‎.badge {
+‎  display: inline-block;
+‎  margin-bottom: 20px;
+‎  padding: 8px 14px;
+‎  border: 1px solid rgba(89, 195, 255, 0.3);
+‎  border-radius: 999px;
+‎  background: rgba(52, 167, 232, 0.08);
+‎  color: #6dcaff;
+‎  font-size: 12px;
+‎  font-weight: 700;
+‎  letter-spacing: 1px;
+‎}
+‎
+‎.hero h1 {
+‎  font-family: "Orbitron", sans-serif;
+‎  font-size: clamp(34px, 5vw, 60px);
+‎  line-height: 1.12;
+‎  margin-bottom: 20px;
+‎  color: #ffffff;
+‎}
+‎
+‎.hero h1 span {
+‎  color: #5ec4ff;
+‎}
+‎
+‎.hero p {
+‎  max-width: 650px;
+‎  color: #a9bdd2;
+‎  font-size: 17px;
+‎  margin-bottom: 30px;
+‎}
+‎
+‎.hero-features {
+‎  display: flex;
+‎  flex-wrap: wrap;
+‎  gap: 14px;
+‎  margin-bottom: 30px;
+‎}
+‎
+‎.feature {
+‎  padding: 10px 14px;
+‎  border: 1px solid #1b3853;
+‎  border-radius: 10px;
+‎  background: rgba(13, 34, 55, 0.7);
+‎  color: #c9d9e8;
+‎  font-size: 13px;
+‎  font-weight: 600;
+‎}
+‎
+‎.primary-btn {
+‎  display: inline-flex;
+‎  align-items: center;
+‎  justify-content: center;
+‎  padding: 13px 21px;
+‎  border-radius: 11px;
+‎  background: #2da9ec;
+‎  color: #041321;
+‎  font-weight: 800;
+‎  transition: 0.2s ease;
+‎  box-shadow: 0 10px 30px rgba(45, 169, 236, 0.18);
+‎}
+‎
+‎.primary-btn:hover {
+‎  transform: translateY(-2px);
+‎  background: #58c2ff;
+‎}
+‎
+‎
+‎/* HERO VISUAL */
+‎
+‎.hero-visual {
+‎  position: relative;
+‎  min-height: 380px;
+‎  display: flex;
+‎  align-items: center;
+‎  justify-content: center;
+‎}
+‎
+‎.hvac-card {
+‎  width: min(100%, 500px);
+‎  min-height: 330px;
+‎  position: relative;
+‎  overflow: hidden;
+‎  border: 1px solid rgba(94, 196, 255, 0.25);
+‎  border-radius: 24px;
+‎  background:
+‎    linear-gradient(145deg, rgba(20, 52, 78, 0.96), rgba(7, 24, 41, 0.98));
+‎  box-shadow:
+‎    0 25px 70px rgba(0, 0, 0, 0.35),
+‎    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+‎}
+‎
+‎.hvac-card::before {
+‎  content: "";
+‎  position: absolute;
+‎  width: 240px;
+‎  height: 240px;
+‎  right: -80px;
+‎  top: -90px;
+‎  border-radius: 50%;
+‎  background: rgba(69, 188, 255, 0.12);
+‎  filter: blur(10px);
+‎}
+‎
+‎.hvac-card::after {
+‎  content: "";
+‎  position: absolute;
+‎  width: 190px;
+‎  height: 190px;
+‎  left: -80px;
+‎  bottom: -100px;
+‎  border-radius: 50%;
+‎  background: rgba(30, 115, 255, 0.10);
+‎  filter: blur(12px);
+‎}
+‎
+‎.card-label {
+‎  position: absolute;
+‎  top: 22px;
+‎  left: 24px;
+‎  z-index: 3;
+‎  color: #77d0ff;
+‎  font-family: "Orbitron", sans-serif;
+‎  font-size: 12px;
+‎  letter-spacing: 1px;
+‎}
+‎
+‎.ac-unit {
+‎  position: absolute;
+‎  width: 270px;
+‎  height: 155px;
+‎  top: 82px;
+‎  left: 50%;
+‎  transform: translateX(-50%);
+‎  border-radius: 12px;
+‎  border: 2px solid #52728d;
+‎  background: linear-gradient(180deg, #dbe8ef, #8ea7b8);
+‎  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.3);
+‎}
+‎
+‎.ac-top {
+‎  position: absolute;
+‎  left: 15px;
+‎  right: 15px;
+‎  top: 15px;
+‎  height: 30px;
+‎  border-radius: 6px;
+‎  background: #b7cbd7;
+‎  border: 1px solid #708a9d;
+‎}
+‎
+‎.ac-display {
+‎  position: absolute;
+‎  right: 18px;
+‎  top: 20px;
+‎  width: 44px;
+‎  height: 18px;
+‎  border-radius: 4px;
+‎  background: #143348;
+‎  color: #70d5ff;
+‎  font-size: 9px;
+‎  display: flex;
+‎  align-items: center;
+‎  justify-content: center;
+‎  font-weight: 800;
+‎}
+‎
+‎.air-slots {
+‎  position: absolute;
+‎  left: 18px;
+‎  right: 18px;
+‎  bottom: 20px;
+‎  height: 48px;
+‎  display: flex;
+‎  gap: 5px;
+‎  align-items: flex-end;
+‎}
+‎
+‎.air-slots span {
+‎  flex: 1;
+‎  height: 30px;
+‎  border-radius: 2px;
+‎  background: #607b8d;
+‎}
+‎
+‎.cool-air {
+‎  position: absolute;
+‎  left: 50%;
+‎  transform: translateX(-50%);
+‎  bottom: 36px;
+‎  width: 300px;
+‎  display: flex;
+‎  justify-content: center;
+‎  gap: 12px;
+‎}
+‎
+‎.cool-air span {
+‎  width: 5px;
+‎  height: 65px;
+‎  border-radius: 999px;
+‎  background: rgba(102, 207, 255, 0.55);
+‎  transform: rotate(8deg);
+‎  filter: blur(0.5px);
+‎}
+‎
+‎.cool-air span:nth-child(2) {
+‎  height: 82px;
+‎  transform: rotate(-3deg);
+‎}
+‎
+‎.cool-air span:nth-child(3) {
+‎  height: 60px;
+‎  transform: rotate(5deg);
+‎}
+‎
+‎.cool-air span:nth-child(4) {
+‎  height: 74px;
+‎  transform: rotate(-6deg);
+‎}
+‎
+‎.visual-text {
+‎  position: absolute;
+‎  bottom: 22px;
+‎  right: 24px;
+‎  z-index: 3;
+‎  font-size: 12px;
+‎  color: #8fa9bd;
+‎}
+‎
+‎
+‎/* TOOLS */
+‎
+‎.tools-section {
+‎  padding: 75px 0;
+‎  background: #08182a;
+‎  border-top: 1px solid rgba(255, 255, 255, 0.03);
+‎}
+‎
+‎.section-heading {
+‎  text-align: center;
+‎  margin-bottom: 42px;
+‎}
+‎
+‎.section-heading h2 {
+‎  font-family: "Orbitron", sans-serif;
+‎  font-size: clamp(26px, 4vw, 38px);
+‎  margin-bottom: 10px;
+‎  color: #ffffff;
+‎}
+‎
+‎.section-heading p {
+‎  color: #91a8bc;
+‎  max-width: 650px;
+‎  margin: auto;
+‎}
+‎
+‎.tools-grid {
+‎  display: grid;
+‎  grid-template-columns: repeat(3, 1fr);
+‎  gap: 20px;
+‎}
+‎
+‎.tool-card {
+‎  min-height: 220px;
+‎  padding: 25px;
+‎  border: 1px solid #193751;
+‎  border-radius: 17px;
+‎  background: linear-gradient(145deg, #0c2238, #091a2d);
+‎  transition: 0.25s ease;
+‎  position: relative;
+‎  overflow: hidden;
+‎}
+‎
+‎.tool-card:hover {
+‎  transform: translateY(-5px);
+‎  border-color: #2c8fc6;
+‎  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+‎}
+‎
+‎.tool-icon {
+‎  width: 50px;
+‎  height: 50px;
+‎  border-radius: 13px;
+‎  display: flex;
+‎  align-items: center;
+‎  justify-content: center;
+‎  margin-bottom: 18px;
+‎  background: rgba(60, 174, 235, 0.11);
+‎  border: 1px solid rgba(60, 174, 235, 0.22);
+‎  font-size: 24px;
+‎}
+‎
+‎.tool-card h3 {
+‎  color: #ffffff;
+‎  font-size: 18px;
+‎  margin-bottom: 8px;
+‎}
+‎
+‎.tool-card p {
+‎  color: #8fa8bc;
+‎  font-size: 13px;
+‎  margin-bottom: 18px;
+‎}
+‎
+‎.tool-link {
+‎  color: #5bc4ff;
+‎  font-size: 13px;
+‎  font-weight: 800;
+‎}
+‎
+‎.coming-soon {
+‎  display: inline-block;
+‎  padding: 5px 9px;
+‎  border-radius: 6px;
+‎  background: rgba(255, 255, 255, 0.06);
+‎  color: #8095a8;
+‎  font-size: 11px;
+‎  font-weight: 700;
+‎  letter-spacing: 0.4px;
+‎}
+‎
+‎
+‎/* ABOUT */
+‎
+‎.about-section {
+‎  padding: 75px 0;
+‎  background: #071426;
+‎}
+‎
+‎.about-box {
+‎  padding: 38px;
+‎  border: 1px solid #1a3853;
+‎  border-radius: 20px;
+‎  background: linear-gradient(145deg, #0c2137, #08192b);
+‎  text-align: center;
+‎}
+‎
+‎.about-box h2 {
+‎  font-family: "Orbitron", sans-serif;
+‎  color: #ffffff;
+‎  margin-bottom: 14px;
+‎}
+‎
+‎.about-box p {
+‎  max-width: 760px;
+‎  margin: auto;
+‎  color: #98aec1;
+‎}
+‎
+‎
+‎/* FOOTER */
+‎
+‎footer {
+‎  background: #04101e;
+‎  border-top: 1px solid rgba(91, 183, 255, 0.12);
+‎  padding: 45px 0 25px;
+‎}
+‎
+‎.footer-grid {
+‎  display: grid;
+‎  grid-template-columns: 1.5fr 1fr 1fr;
+‎  gap: 35px;
+‎  margin-bottom: 35px;
+‎}
+‎
+‎.footer-column h3 {
+‎  font-family: "Orbitron", sans-serif;
+‎  color: #ffffff;
+‎  font-size: 15px;
+‎  margin-bottom: 15px;
+‎}
+‎
+‎.footer-column p,
+‎.footer-column a {
+‎  color: #8097aa;
+‎  font-size: 13px;
+‎}
+‎
+‎.footer-column a {
+‎  display: block;
+‎  margin-bottom: 8px;
+‎  transition: 0.2s ease;
+‎}
+‎
+‎.footer-column a:hover {
+‎  color: #5bc4ff;
+‎}
+‎
+‎.copyright {
+‎  padding-top: 22px;
+‎  border-top: 1px solid rgba(255, 255, 255, 0.06);
+‎  text-align: center;
+‎  color: #657b8d;
+‎  font-size: 12px;
+‎}
+‎
+‎
+‎/* NO RESULTS */
+‎
+‎#noResults {
+‎  display: none;
+‎  text-align: center;
+‎  color: #8fa8bc;
+‎  padding: 25px;
+‎  grid-column: 1 / -1;
+‎}
+‎
+‎
+‎/* RESPONSIVE */
+‎
+‎@media (max-width: 900px) {
+‎
+‎  .nav-inner {
+‎    flex-wrap: wrap;
+‎    padding: 12px 0;
+‎  }
+‎
+‎  .nav-links {
+‎    order: 3;
+‎    width: 100%;
+‎    justify-content: center;
+‎    gap: 18px;
+‎  }
+‎
+‎  .search-box {
+‎    width: 180px;
+‎  }
+‎
+‎  .hero {
+‎    padding-top: 60px;
+‎  }
+‎
+‎  .hero-grid {
+‎    grid-template-columns: 1fr;
+‎    gap: 40px;
+‎  }
+‎
+‎  .hero-content {
+‎    text-align: center;
+‎  }
+‎
+‎  .hero p {
+‎    margin-left: auto;
+‎    margin-right: auto;
+‎  }
+‎
+‎  .hero-features {
+‎    justify-content: center;
+‎  }
+‎
+‎  .tools-grid {
+‎    grid-template-columns: repeat(2, 1fr);
+‎  }
+‎
+‎  .footer-grid {
+‎    grid-template-columns: repeat(2, 1fr);
+‎  }
+‎}
+‎
+‎
+‎@media (max-width: 600px) {
+‎
+‎  .container {
+‎    width: 90%;
+‎  }
+‎
+‎  .logo {
+‎    font-size: 17px;
+‎  }
+‎
+‎  .search-box {
+‎    display: none;
+‎  }
+‎
+‎  .nav-inner {
+‎    min-height: 64px;
+‎  }
+‎
+‎  .nav-links {
+‎    gap: 13px;
+‎  }
+‎
+‎  .nav-links a {
+‎    font-size: 12px;
+‎  }
+‎
+‎  .hero {
+‎    padding: 50px 0;
+‎  }
+‎
+‎  .hero h1 {
+‎    font-size: 34px;
+‎  }
+‎
+‎  .hero p {
+‎    font-size: 15px;
+‎  }
+‎
+‎  .hero-visual {
+‎    min-height: 300px;
+‎  }
+‎
+‎  .hvac-card {
+‎    min-height: 280px;
+‎  }
+‎
+‎  .ac-unit {
+‎    width: 230px;
+‎    height: 135px;
+‎    top: 75px;
+‎  }
+‎
+‎  .cool-air {
+‎    width: 250px;
+‎  }
+‎
+‎  .tools-section,
+‎  .about-section {
+‎    padding: 55px 0;
+‎  }
+‎
+‎  .tools-grid {
+‎    grid-template-columns: 1fr;
+‎  }
+‎
+‎  .tool-card {
+‎    min-height: auto;
+‎  }
+‎
+‎  .footer-grid {
+‎    grid-template-columns: 1fr;
+‎    gap: 25px;
+‎  }
+‎
+‎  .about-box {
+‎    padding: 28px 20px;
+‎  }
+‎
+‎}
+‎
+‎</style>
+‎</head>
+‎
+‎<body>
+‎
+‎
+‎<!-- NAVIGATION -->
+‎
+‎<nav>
+‎  <div class="container nav-inner">
+‎
+‎    <a href="index.html" class="logo">
+‎      ❄ HVAC TOOLS
+‎    </a>
+‎
+‎    <div class="nav-links">
+‎      <a href="index.html">Home</a>
+‎      <a href="#tools">Tools</a>
+‎      <a href="#about">About</a>
+‎      <a href="contact.html">Contact</a>
+‎    </div>
+‎
+‎    <div class="search-box">
+‎      <input
+‎        type="search"
+‎        id="searchInput"
+‎        placeholder="Search tools..."
+‎        aria-label="Search HVAC tools"
+‎      >
+‎    </div>
+‎
+‎  </div>
+‎</nav>
+‎
+‎
+‎<!-- HERO -->
+‎
+‎<main>
+‎
+‎<section class="hero">
+‎
+‎  <div class="container hero-grid">
+‎
+‎    <div class="hero-content">
+‎
+‎      <div class="badge">
+‎        ❄ FREE HVAC CALCULATORS
+‎      </div>
+‎
+‎      <h1>
+‎        Smart Tools for
+‎        <span>HVAC Professionals</span>
+‎      </h1>
+‎
+‎      <p>
+‎        Simple and useful HVAC calculators designed to help AC,
+‎        refrigeration and HVAC technicians save time and work smarter.
+‎      </p>
+‎
+‎      <div class="hero-features">
+‎
+‎        <div class="feature">
+‎          ✓ Save Time
+‎        </div>
+‎
+‎        <div class="feature">
+‎          ✓ Accurate Results
+‎        </div>
+‎
+‎        <div class="feature">
+‎          ✓ Work Smarter
+‎        </div>
+‎
+‎      </div>
+‎
+‎      <a href="#tools" class="primary-btn">
+‎        Explore HVAC Tools →
+‎      </a>
+‎
+‎    </div>
+‎
+‎
+‎    <!-- HVAC VISUAL -->
+‎
+‎    <div class="hero-visual">
+‎
+‎      <div class="hvac-card">
+‎
+‎        <div class="card-label">
+‎          HVAC WORKSTATION
+‎        </div>
+‎
+‎        <div class="ac-unit">
+‎
+‎          <div class="ac-top"></div>
+‎
+‎          <div class="ac-display">
+‎            COOL
+‎          </div>
+‎
+‎          <div class="air-slots">
+‎            <span></span>
+‎            <span></span>
+‎            <span></span>
+‎            <span></span>
+‎            <span></span>
+‎            <span></span>
+‎            <span></span>
+‎            <span></span>
+‎          </div>
+‎
+‎        </div>
+‎
+‎        <div class="cool-air">
+‎          <span></span>
+‎          <span></span>
+‎          <span></span>
+‎          <span></span>
+‎        </div>
+‎
+‎        <div class="visual-text">
+‎          Better Cooling • Bigger Comfort
+‎        </div>
+‎
+‎      </div>
+‎
+‎    </div>
+‎
+‎  </div>
+‎
+‎</section>
+‎
+‎
+‎<!-- HVAC TOOLS -->
+‎
+‎<section class="tools-section" id="tools">
+‎
+‎  <div class="container">
+‎
+‎    <div class="section-heading">
+‎
+‎      <h2>
+‎        HVAC Tools
+‎      </h2>
+‎
+‎      <p>
+‎        Free online tools for AC technicians, refrigeration technicians
+‎        and HVAC professionals.
+‎      </p>
+‎
+‎    </div>
+‎
+‎
+‎    <div class="tools-grid" id="toolsGrid">
+‎
+‎
+‎      <!-- TOOL 1 -->
+‎
+‎      <div class="tool-card">
+‎
+‎        <div class="tool-icon">
+‎          ❄️
+‎        </div>
+‎
+‎        <h3>
+‎          AC BTU &amp; Ton Calculator
+‎        </h3>
+‎
+‎        <p>
+‎          Calculate required AC BTU and approximate tonnage
+‎          according to room size and conditions.
+‎        </p>
+‎
+‎        <a href="ac-btu-calculator.html" class="tool-link">
+‎          Open Calculator →
+‎        </a>
+‎
+‎      </div>
+‎
+‎
+‎      <!-- TOOL 2 -->
+‎
+‎      <div class="tool-card">
+‎
+‎        <div class="tool-icon">
+‎          ⚡
+‎        </div>
+‎
+‎        <h3>
+‎          Electricity Cost Calculator
+‎        </h3>
+‎
+‎        <p>
+‎          Estimate AC electricity consumption and approximate
+‎          running cost.
+‎        </p>
+‎
+‎        <span class="coming-soon">
+‎          COMING SOON
+‎        </span>
+‎
+‎      </div>
+‎
+‎
+‎      <!-- TOOL 3 -->
+‎
+‎      <div class="tool-card">
+‎
+‎        <div class="tool-icon">
+‎          🌡️
+‎        </div>
+‎
+‎        <h3>
+‎          Refrigerant Pressure Tool
+‎        </h3>
+‎
+‎        <p>
+‎          Check common refrigerant pressure information and
+‎          compare operating conditions.
+‎        </p>
+‎
+‎        <span class="coming-soon">
+‎          COMING SOON
+‎        </span>
+‎
+‎      </div>
+‎
+‎
+‎      <!-- TOOL 4 -->
+‎
+‎      <div class="tool-card">
+‎
+‎        <div class="tool-icon">
+‎          📈
+‎        </div>
+‎
+‎        <h3>
+‎          Superheat Calculator
+‎        </h3>
+‎
+‎        <p>
+‎          Calculate superheat using refrigerant saturation
+‎          temperature and measured suction temperature.
+‎        </p>
+‎
+‎        <span class="coming-soon">
+‎          COMING SOON
+‎        </span>
+‎
+‎      </div>
+‎
+‎
+‎      <!-- TOOL 5 -->
+‎
+‎      <div class="tool-card">
+‎
+‎        <div class="tool-icon">
+‎          📉
+‎        </div>
+‎
+‎        <h3>
+‎          Subcooling Calculator
+‎        </h3>
+‎
+‎        <p>
+‎          Calculate liquid-line subcooling using saturation
+‎          temperature and measured liquid-line temperature.
+‎        </p>
+‎
+‎        <span class="coming-soon">
+‎          COMING SOON
+‎        </span>
+‎
+‎      </div>
+‎
+‎
+‎      <!-- TOOL 6 -->
+‎
+‎      <div class="tool-card">
+‎
+‎        <div class="tool-icon">
+‎          💧
+‎        </div>
+‎
+‎        <h3>
+‎          Water Chiller Calculator
+‎        </h3>
+‎
+‎        <p>
+‎          Estimate cooling requirements for water tanks,
+‎          chilled water systems and basic chiller applications.
+‎        </p>
+‎
+‎        <span class="coming-soon">
+‎          COMING SOON
+‎        </span>
+‎
+‎      </div>
+‎
+‎
+‎      <div id="noResults">
+‎        No HVAC tools found.
+‎      </div>
+‎
+‎    </div>
+‎
+‎  </div>
+‎
+‎</section>
+‎
+‎
+‎<!-- ABOUT -->
+‎
+‎<section class="about-section" id="about">
+‎
+‎  <div class="container">
+‎
+‎    <div class="about-box">
+‎
+‎      <h2>
+‎        Built for HVAC Work
+‎      </h2>
+‎
+‎      <p>
+‎        HVAC Tools is designed to provide simple, practical and
+‎        easy-to-use calculators for HVAC technicians, AC mechanics,
+‎        refrigeration professionals and students. Our goal is to make
+‎        everyday HVAC calculations faster and easier.
+‎      </p>
+‎
+‎    </div>
+‎
+‎  </div>
+‎
+‎</section>
+‎
+‎</main>
+‎
+‎
+‎<!-- FOOTER -->
+‎
+‎<footer>
+‎
+‎  <div class="container">
+‎
+‎    <div class="footer-grid">
+‎
+‎
+‎      <div class="footer-column">
+‎
+‎        <h3>
+‎          HVAC TOOLS
+‎        </h3>
+‎
+‎        <p>
+‎          Free online HVAC and AC calculators for technicians
+‎          and professionals.
+‎        </p>
+‎
+‎      </div>
+‎
+‎
+‎      <div class="footer-column">
+‎
+‎        <h3>
+‎          Quick Links
+‎        </h3>
+‎
+‎        <a href="index.html">
+‎          Home
+‎        </a>
+‎
+‎        <a href="#tools">
+‎          HVAC Tools
+‎        </a>
+‎
+‎        <a href="#about">
+‎          About
+‎        </a>
+‎
+‎        <a href="contact.html">
+‎          Contact
+‎        </a>
+‎
+‎      </div>
+‎
+‎
+‎      <div class="footer-column">
+‎
+‎        <h3>
+‎          Legal &amp; Contact
+‎        </h3>
+‎
+‎        <a href="Privacy.html">
+‎          Privacy Policy
+‎        </a>
+‎
+‎        <a href="Disclaimer.html">
+‎          Disclaimer
+‎        </a>
+‎
+‎        <a href="Terms.html">
+‎          Terms &amp; Conditions
+‎        </a>
+‎
+‎        <a href="mailto:youforevertrend@gmail.com">
+‎          Email Us
+‎        </a>
+‎
+‎      </div>
+‎
+‎    </div>
+‎
+‎
+‎    <div class="copyright">
+‎      © <span id="year"></span> HVAC Tools. All rights reserved.
+‎    </div>
+‎
+‎  </div>
+‎
+‎</footer>
+‎
+‎
+‎<!-- JAVASCRIPT -->
+‎
+‎<script>
+‎
+‎document.addEventListener("DOMContentLoaded", function () {
+‎
+‎  /* CURRENT YEAR */
+‎
+‎  const yearElement = document.getElementById("year");
+‎
+‎  if (yearElement) {
+‎    yearElement.textContent = new Date().getFullYear();
+‎  }
+‎
+‎
+‎  /* TOOL SEARCH */
+‎
+‎  const searchInput = document.getElementById("searchInput");
+‎  const toolCards = document.querySelectorAll(".tool-card");
+‎  const noResults = document.getElementById("noResults");
+‎
+‎  if (searchInput) {
+‎
+‎    searchInput.addEventListener("input", function () {
+‎
+‎      const searchText = this.value.toLowerCase().trim();
+‎
+‎      let visibleTools = 0;
+‎
+‎      toolCards.forEach(function (card) {
+‎
+‎        const cardText = card.textContent.toLowerCase();
+‎
+‎        if (cardText.includes(searchText)) {
+‎
+‎          card.style.display = "";
+‎          visibleTools++;
+‎
+‎        } else {
+‎
+‎          card.style.display = "none";
+‎
+‎        }
+‎
+‎      });
+‎
+‎
+‎      if (noResults) {
+‎
+‎        if (visibleTools === 0) {
+‎          noResults.style.display = "block";
+‎        } else {
+‎          noResults.style.display = "none";
+‎        }
+‎
+‎      }
+‎
+‎    });
+‎
+‎  }
+‎
+‎});
+‎
+‎</script>
+‎
+‎</body>
+‎</html>
