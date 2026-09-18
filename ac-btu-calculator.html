@@ -14,20 +14,25 @@
 <label>Windows / Large Glass<select id="windows"><option value="0">Few / small</option><option value="800">Average</option><option value="1600">Many / large</option></select></label>
 <label>Sun Exposure<select id="sun"><option value="0">Low / shaded</option><option value="1500">Average</option><option value="3000">High / direct sun</option></select></label>
 <label>Top Floor / Hot Roof<select id="roof"><option value="0">No</option><option value="1500">Yes</option></select></label>
-<label>Insulation<select id="insulation"><option value="1000">Good</option><option value="0">Average</option><option value="-1000">Poor / extra heat gain</option></select></label>
+<label>Insulation<select id="insulation"><option value="-1000">Good</option><option value="0">Average</option><option value="1500">Poor / extra heat gain</option></select></label>
 </div><button onclick="calculate()">Calculate</button>
 <div id="result" class="result" hidden><h2>Estimated Requirement</h2><div id="btu" class="big"></div><div id="ton" class="pill"></div><div class="resultgrid"><div class="box">Room Area<strong id="area"></strong></div><div class="box">Recommended Size<strong id="recommendation"></strong></div></div><p id="explanation"></p><div class="warning"><b>Estimate only:</b> This calculator is not a professional Manual J or detailed heat-load calculation. Construction, glass area, orientation, ventilation, equipment and local outdoor conditions can change the actual requirement.</div></div>
 <h2>How the calculator works</h2><p>It starts with an area-based estimate and adjusts it for ceiling height, occupants, windows, sunlight, a hot roof and insulation. 12,000 BTU/hr is treated as approximately one refrigeration ton.</p>
 </div></section></main><footer><div class="wrap"><p>© 2026 HVAC Tools</p><div><a href="privacy-policy.html">Privacy Policy</a><a href="disclaimer.html">Disclaimer</a><a href="contact.html">Contact</a></div></div></footer>
 <script>
 function calculate(){
-const L=+length.value,W=+width.value,H=+height.value||10,P=+people.value||1;
+const L=+document.getElementById("length").value,
+      W=+document.getElementById("width").value,
+      H=+document.getElementById("height").value||10,
+      P=+document.getElementById("people").value||1;
+
 if(!(L>0&&W>0)){alert("Enter valid length and width.");return}
-const area=L*W;let btu=area*20*Math.max(.8,Math.min(1.35,H/10))+Math.max(0,P-2)*600+ +windows.value + +sun.value + +roof.value + +insulation.value;
+const area=L*W;
+let btu=area*20*Math.max(.8,Math.min(1.35,H/10))+Math.max(0,P-2)*600+ +document.getElementById("windows").value + +document.getElementById("sun").value + +document.getElementById("roof").value + +document.getElementById("insulation").value;
 btu=Math.max(5000,Math.round(btu/500)*500);const tons=btu/12000;
 let rec=btu<=12000?"1 Ton":btu<=18000?"1.5 Ton":btu<=24000?"2 Ton":btu<=30000?"2.5 Ton":"3 Ton or more";
 document.querySelector("#area").textContent=area.toFixed(1)+" ft²";document.querySelector("#btu").textContent=btu.toLocaleString()+" BTU/hr";document.querySelector("#ton").textContent=tons.toFixed(2)+" Ton equivalent";document.querySelector("#recommendation").textContent=rec;
 document.querySelector("#explanation").textContent=`For a ${area.toFixed(1)} ft² room, the estimated cooling requirement is about ${btu.toLocaleString()} BTU/hr. The practical capacity range is around ${rec}.`;
-result.hidden=false;result.scrollIntoView({behavior:"smooth"});
+const result=document.getElementById("result");result.hidden=false;result.scrollIntoView({behavior:"smooth"});
 }
 </script></body></html>
