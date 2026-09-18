@@ -1,0 +1,197 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>AC Electricity Cost Calculator - HVAC Tools</title>
+  <meta name="description" content="Calculate your air conditioner electricity consumption and estimated daily and monthly electricity cost.">  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f5f7fb;
+      color: #263238;
+      font-family: "Inter", Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 35px auto;
+      padding: 30px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      text-align: center;
+      color: #0b5ed7;
+      margin-bottom: 10px;
+    }
+
+    .intro {
+      text-align: center;
+      color: #6b7280;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-top: 18px;
+      margin-bottom: 7px;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #d5dbe3;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 25px;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      background: #0b5ed7;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .result {
+      display: none;
+      margin-top: 25px;
+      padding: 20px;
+      background: #eef6ff;
+      border-radius: 10px;
+      border-left: 4px solid #0b5ed7;
+    }
+
+    .result p {
+      margin: 9px 0;
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 25px;
+      color: #0b5ed7;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .note {
+      margin-top: 25px;
+      padding: 15px;
+      background: #fff8e6;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #66551c;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 20px 12px;
+        padding: 22px;
+      }
+
+      h1 {
+        font-size: 27px;
+      }
+    }
+  </style></head><body><div class="container">  <h1>AC Electricity Cost Calculator</h1>  <p class="intro">
+    Estimate your air conditioner's electricity consumption and cost.
+  </p><label for="power">AC Power Consumption (kW)</label>
+<input type="number" id="power" placeholder="Example: 1.5" step="0.01">
+
+<label for="hours">Hours Used Per Day</label>
+<input type="number" id="hours" placeholder="Example: 8" step="0.1">
+
+<label for="rate">Electricity Rate (per kWh)</label>
+<input type="number" id="rate" placeholder="Example: 60" step="0.01">
+
+<label for="days">Number of Days</label>
+<input type="number" id="days" value="30">
+
+<button onclick="calculateCost()">Calculate Cost</button>
+
+  <div class="result" id="result"><p>
+  <strong>Daily Consumption:</strong>
+  <span id="dailyUnits"></span> kWh
+</p>
+
+<p>
+  <strong>Daily Cost:</strong>
+  <span id="dailyCost"></span>
+</p>
+
+<p>
+  <strong>Monthly Consumption:</strong>
+  <span id="monthlyUnits"></span> kWh
+</p>
+
+<p>
+  <strong>Estimated Monthly Cost:</strong>
+  <span id="monthlyCost"></span>
+</p>
+
+  </div>  <div class="note">
+    <strong>Note:</strong> This calculator provides an estimate.
+    Actual electricity consumption can vary depending on AC efficiency,
+    thermostat settings, outdoor temperature, room insulation, voltage,
+    compressor operation, and other conditions.
+  </div>  <a class="back" href="index.html">
+    ← Back to HVAC Tools
+  </a></div><script>
+function calculateCost() {
+
+  const power = parseFloat(document.getElementById("power").value);
+  const hours = parseFloat(document.getElementById("hours").value);
+  const rate = parseFloat(document.getElementById("rate").value);
+  const days = parseFloat(document.getElementById("days").value);
+
+  if (
+    isNaN(power) ||
+    isNaN(hours) ||
+    isNaN(rate) ||
+    isNaN(days) ||
+    power <= 0 ||
+    hours <= 0 ||
+    rate < 0 ||
+    days <= 0
+  ) {
+    alert("Please enter valid values.");
+    return;
+  }
+
+  const dailyUnits = power * hours;
+  const dailyCost = dailyUnits * rate;
+  const monthlyUnits = dailyUnits * days;
+  const monthlyCost = monthlyUnits * rate;
+
+  document.getElementById("dailyUnits").textContent =
+    dailyUnits.toFixed(2);
+
+  document.getElementById("dailyCost").textContent =
+    dailyCost.toFixed(2);
+
+  document.getElementById("monthlyUnits").textContent =
+    monthlyUnits.toFixed(2);
+
+  document.getElementById("monthlyCost").textContent =
+    monthlyCost.toFixed(2);
+
+  document.getElementById("result").style.display = "block";
+}
+</script></body>
+  </html>
