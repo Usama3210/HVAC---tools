@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Free AC BTU and ton calculator. Estimate cooling capacity from room dimensions.">
+<title>AC BTU & Ton Calculator - HVAC Tools</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#02101f,#061c32);color:#f4fbff;min-height:100vh}
+a{text-decoration:none;color:inherit}
+.nav{height:65px;background:#020e1d;border-bottom:1px solid #00d9ff;display:flex;align-items:center;justify-content:space-between;padding:0 5%;position:sticky;top:0;z-index:5}
+.logo{font-size:25px;font-weight:900}.logo span{color:#00ddff;font-size:38px}.logo strong{color:#00ddff}
+.back{padding:9px 17px;border:1px solid #00d9ff;border-radius:20px;color:#00ddff}
+.wrap{width:min(850px,92%);margin:35px auto}
+h1{text-align:center;font-size:38px;margin:0 0 7px;background:linear-gradient(90deg,#00ddff,#8c38ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{text-align:center;color:#bdd6e7;margin-bottom:25px}
+.box{background:linear-gradient(145deg,#082a49,#061a30);border:1px solid #00aaff;border-radius:18px;padding:25px;box-shadow:0 0 25px #00aaff22}
+.form{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+label{font-size:14px;font-weight:bold;color:#dceefa}
+input,select{width:100%;margin-top:7px;padding:12px;border:1px solid #2e7bb5;border-radius:9px;background:#04172a;color:#fff;font-size:16px;outline:none}
+input:focus,select:focus{border-color:#00ddff;box-shadow:0 0 8px #00ddff44}
+button{width:100%;margin-top:20px;padding:13px;border:0;border-radius:25px;color:#fff;background:linear-gradient(90deg,#00d9ff,#247dff,#a632ff);font-size:17px;font-weight:800;cursor:pointer}
+button:hover{filter:brightness(1.12)}
+.result{display:none;margin-top:22px;padding:20px;border-radius:14px;background:#03233d;border:1px solid #00ddff;text-align:center}
+.result.show{display:block}
+.main-result{font-size:35px;font-weight:900;color:#00ddff;margin:4px}
+.small{color:#c5dce9;font-size:14px}
+.note{margin-top:18px;color:#a9c5d8;font-size:12px;line-height:1.5}
+.error{color:#ff8790;margin-top:10px;text-align:center;display:none}
+@media(max-width:650px){.nav{padding:0 4%}.logo{font-size:20px}.logo span{font-size:30px}.wrap{margin:22px auto}.box{padding:18px}.form{grid-template-columns:1fr}h1{font-size:30px}}
+</style>
+</head>
+<body>
+<header class="nav">
+<a class="logo" href="index.html"><span>❄</span> HVAC <strong>TOOLS</strong></a>
+<a class="back" href="index.html">← Home</a>
+</header>
+
+<main class="wrap">
+<h1>AC BTU &amp; Ton Calculator</h1>
+<p class="sub">Estimate the recommended cooling capacity from room size.</p>
+
+<section class="box">
+<div class="form">
+  <label>Room Length
+    <input id="length" type="number" min="0" step="0.1" placeholder="e.g. 15">
+  </label>
+  <label>Room Width
+    <input id="width" type="number" min="0" step="0.1" placeholder="e.g. 12">
+  </label>
+  <label>Unit
+    <select id="unit"><option value="ft">Feet (ft)</option><option value="m">Meters (m)</option></select>
+  </label>
+</div>
+
+<div class="form" style="margin-top:15px">
+  <label>Ceiling Height
+    <input id="height" type="number" min="0" step="0.1" value="10">
+  </label>
+  <label>Sun Exposure
+    <select id="sun"><option value="1">Normal</option><option value="1.1">High / Sunny</option></select>
+  </label>
+  <label>Occupancy
+    <select id="people"><option value="1">1–2 people</option><option value="1.05">3–4 people</option><option value="1.1">5+ people</option></select>
+  </label>
+</div>
+
+<button id="calculate">Calculate BTU &amp; Ton</button>
+<div id="error" class="error">Please enter valid room dimensions.</div>
+
+<div id="result" class="result">
+  <div class="small">Estimated cooling capacity</div>
+  <div id="btu" class="main-result">0 BTU/h</div>
+  <div id="tons" class="small">0 ton</div>
+  <div id="area" class="small"></div>
+</div>
+
+<p class="note"><b>Note:</b> This is a practical estimate, not a full HVAC load calculation. Insulation, windows, wall construction, climate, equipment efficiency and other heat loads can change the required capacity.</p>
+</section>
+</main>
+
+<script>
+document.getElementById("calculate").addEventListener("click",function(){
+  const L=parseFloat(document.getElementById("length").value);
+  const W=parseFloat(document.getElementById("width").value);
+  const H=parseFloat(document.getElementById("height").value);
+  const unit=document.getElementById("unit").value;
+  const sun=parseFloat(document.getElementById("sun").value);
+  const people=parseFloat(document.getElementById("people").value);
+  const error=document.getElementById("error");
+  const result=document.getElementById("result");
+
+  if(!Number.isFinite(L)||!Number.isFinite(W)||!Number.isFinite(H)||L<=0||W<=0||H<=0){
+    error.style.display="block";
+    result.classList.remove("show");
+    return;
+  }
+  error.style.display="none";
+
+  // Practical residential estimate. Convert metric area to square feet.
+  const areaSqFt=unit==="m" ? L*W*10.7639 : L*W;
+  const heightFactor=H/(unit==="m"?2.8:9);
+  let btu=areaSqFt*20*heightFactor*sun*people;
+
+  // Round to the nearest 1,000 BTU/h for a readable practical estimate.
+  btu=Math.max(6000,Math.round(btu/1000)*1000);
+  const tons=btu/12000;
+
+  document.getElementById("btu").textContent=btu.toLocaleString()+" BTU/h";
+  document.getElementById("tons").textContent=tons.toFixed(2)+" ton";
+  document.getElementById("area").textContent="Room area: "+areaSqFt.toFixed(1)+" sq ft";
+  result.classList.add("show");
+});
+</script>
+</body>
+</html>
